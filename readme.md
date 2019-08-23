@@ -103,6 +103,7 @@ DBサーバーを起動し、Medcheck用の適当な名前のデータベース�
 ```bash
 # マイグレーションの実行
 php artisan migrate
+
 # 各種設定用テーブルのデータを一括挿入（csvファイルを使う）
 php artisan db:seed
 ```
@@ -114,8 +115,10 @@ php artisan db:seed
 ```bash
 # Redis起動
 redis-server.exe
+
 # laravel-echo-serverの初期設定
 laravel-echo-server init
+
 # laravel-echo-server起動
 laravel-echo-server start
 

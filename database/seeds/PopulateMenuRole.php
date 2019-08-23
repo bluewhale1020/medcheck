@@ -3,14 +3,13 @@
 use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
-class PopulateExamAreas extends CsvSeeder
-
+class PopulateMenuRole extends CsvSeeder
 {
 	public function __construct()
 	{
-        $this->table = 'exam_areas';
+        $this->table = 'menu_role';
         // $this->csv_delimiter = ',';
-        $this->filename = base_path().'/database/seeds/csvs/exam_areas.csv';
+        $this->filename = base_path().'/database/seeds/csvs/menu_role.csv';
         // Skipping the CSV header row (Note: A mapping is required if this is done)
         // $this->offset_rows = 1;
         // Specifying which CSV columns to import

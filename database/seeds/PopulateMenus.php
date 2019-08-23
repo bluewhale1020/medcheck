@@ -27,7 +27,7 @@ class PopulateMenus extends CsvSeeder
 		// DB::disableQueryLog();
 
 		// Uncomment the below to wipe the table clean before populating
-		// DB::table($this->table)->truncate();
+		DB::table($this->table)->truncate();
 
 		parent::run();
 	}
