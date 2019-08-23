@@ -393,7 +393,7 @@ import { stringify } from 'querystring';
                     var results, 
                         data = e.target.result, 
                         fixedData = this.fixdata(data), 
-                        workbook=XLSX.read(btoa(fixedData), {type: 'base64'}), 
+                        workbook=XLSX.read(btoa(fixedData), {type: 'base64', cellText:false, dateNF:'yyyy-mm-dd'}), 
                         firstSheetName = workbook.SheetNames[0], 
                         worksheet = workbook.Sheets[firstSheetName];
                     this.headers=this.get_header_row(worksheet);

@@ -108,6 +108,13 @@ php artisan migrate
 php artisan db:seed
 ```
 
+### API認証
+
+```bash
+# passportのデプロイ
+php artisan passport:keys
+```
+
 
 
 ### ブロードキャスト設定
@@ -115,6 +122,9 @@ php artisan db:seed
 ```bash
 # Redis起動
 redis-server.exe
+
+# laravel-echo-serverのインストール
+npm install -g laravel-echo-server
 
 # laravel-echo-serverの初期設定
 laravel-echo-server init

@@ -6,4 +6,3 @@ id,name,value,name_jp
 5,check_in_count,0,"受付数"
 6,complete_count,0,"完了数"
 7,count_at_intervals,,"時間別受付数"
-
