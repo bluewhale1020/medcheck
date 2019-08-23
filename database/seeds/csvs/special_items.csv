@@ -1,0 +1,6 @@
+id,name,height,weight,bodyfat_ratio,abdominal_circumference,vision_test,hearing_test,hearing_test_conv,physical_examination,blood_pressure,urinary_test,urinary_sediment,blood_test,fecaloccult_blood,electrogram_test,chest_xray,stomach_xray,eye_pressure,eyeground,grip_strength,lung_capacities,urinary_metabolites,created_at,updated_at
+1,ionizing_radiation,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0000-00-00 00:00:00,0000-00-00 00:00:00
+2,lead,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0000-00-00 00:00:00,0000-00-00 00:00:00
+3,dust,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0000-00-00 00:00:00,0000-00-00 00:00:00
+4,Indium,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0000-00-00 00:00:00,0000-00-00 00:00:00
+5,formaldehyde,1,1,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0000-00-00 00:00:00,0000-00-00 00:00:00

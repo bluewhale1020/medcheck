@@ -1,0 +1,9 @@
+id,name,value,name_jp
+1,last_updated_time,,"作成日時"
+2,start_time,,"開始時間"
+3,interval,30,"時間間隔"
+4,reserve_count,0,"予約人数"
+5,check_in_count,0,"受付数"
+6,complete_count,0,"完了数"
+7,count_at_intervals,,"時間別受付数"
+

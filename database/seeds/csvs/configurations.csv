@@ -1,0 +1,8 @@
+name,categories,value,description
+reception_list_id,reception,,"現在使用中の健診簿ID"
+barcode_protocol,barcode,USB(HID),"バーコード受信方法"
+barcode_column_name,barcode,id_number,"バーコードで紐づけるカラム名"
+barcode_column_name2,barcode,checkup_info_id,"バーコードで紐づけるカラム名2"
+default_barcode_no,barcode,XXXXX,"白紙バーコードNo"
+reception_list_filename,reception,"健診簿,出力ファイル名"
+first_serial_number,reception,1,"通番開始番号"

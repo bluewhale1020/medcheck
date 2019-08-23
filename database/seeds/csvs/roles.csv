@@ -1,0 +1,7 @@
+id,name,name_jp
+1,admin,"管理者"
+2,receptionist,"受付"
+3,staff,"スタッフ"
+4,nurse,"看護師"
+5,radiologist,"技師"
+6,doctor,"医師"

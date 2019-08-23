@@ -1,0 +1,77 @@
+//login page
+.login-box, .register-box {
+    width: 400px !important;
+    margin: 3% auto;
+}
+.login-box .brand-image, .register-box .brand-image
+ {
+    max-height: 45px !important;
+}
+
+// layout side-bar
+.control-sidebar-dark, .control-sidebar-dark:before {
+    background: #1c4874;
+    opacity: 0.9;
+}
+
+//custom bg colors
+.bg-orange{
+    background-color: $orange !important;
+    color: black !important;    
+}
+a.bg-orange:hover,
+a.bg-orange:focus,
+button.bg-orange:hover,
+button.bg-orange:focus {
+    background-color: #ae6428 !important;
+    color: white !important;
+}
+
+.bg-lightgreen{
+    background-color: $lightgreen !important;
+    color: #2d5237 !important;     
+}
+
+.bg-lightblue{
+    background-color: $lightblue !important;
+    color: #2d3d52 !important;     
+}
+
+.main-header{
+    font-size: large;
+  }
+
+//custom color class
+.text-grey {
+    color:$grey;
+}
+  .text-blue {
+      color:$blue;
+  }
+  .text-indigo {
+      color:$indigo;
+  }
+  .text-purple {
+      color:$purple;
+  }
+  .text-pink {
+      color:$pink;
+  }
+  .text-red {
+      color:$red;
+  }
+  .text-orange {
+      color:$orange;
+  }
+  .text-yellow {
+      color:$yellow;
+  }
+  .text-green {
+      color:$green;
+  }
+  .text-teal {
+      color:$teal;
+  }
+  .text-cyan {
+      color:$cyan;
+  }

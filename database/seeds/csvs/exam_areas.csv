@@ -1,0 +1,11 @@
+id,name,exam_category_id,height,weight,bodyfat_ratio,abdominal_circumference,vision_test,hearing_test,hearing_test_conv,physical_examination,blood_pressure,urinary_test,urinary_sediment,blood_test,fecaloccult_blood,electrogram_test,chest_xray,stomach_xray,eye_pressure,eyeground,grip_strength,lung_capacities,urinary_metabolites,created_at,updated_at
+1,"検便・尿検",1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,,
+2,"身体計測",2,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,
+3,"視力",2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,
+4,"聴力",2,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,
+5,"血圧",2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,,
+6,"採血検査",3,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,,
+7,"胸部XP",4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,,
+8,"心電図",4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,,
+9,"診察",5,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,,
+

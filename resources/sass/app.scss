@@ -1,0 +1,26 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+// $fa-font-path: "../webfonts" !default;
+// $fa-font-path: "../webfonts";
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// admin-lte
+@import '~admin-lte/dist/css/adminlte.css';
+
+
+//v-select
+@import '~vue-select/src/scss/vue-select.scss';
+
+//custom style
+@import 'custom';
+
+// Font Awesome
+// @import "~@fortawesome/fontawesome-free/css/all.css"; 
+// @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+// @import '~@fortawesome/fontawesome-free/scss/brands';
+// @import '~@fortawesome/fontawesome-free/scss/regular';
+// @import '~@fortawesome/fontawesome-free/scss/solid';

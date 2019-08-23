@@ -1,0 +1,7 @@
+id,name,name_jp
+1,specimen,"検体"
+2,basic_items,"基本項目"
+3,blood_sampling,"採血検査"
+4,interpretation_items,"読影項目"
+5,doctors_jobs,"医師の担当"
+6,special_items,"特殊項目"
