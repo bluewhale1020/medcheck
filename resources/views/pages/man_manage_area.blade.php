@@ -1,5 +1,5 @@
 @extends('layouts.doc')
-
+@section('menu','manage_area')
 @section('content')
 <div class="container">
     <div class="row">

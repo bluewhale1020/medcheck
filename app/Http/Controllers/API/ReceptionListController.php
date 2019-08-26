@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ReceptionList;
+use App\Configuration;
 
 use App\Events\saveModel;
 
@@ -47,6 +48,9 @@ class ReceptionListController extends Controller
             event(new saveModel(["健診簿レコード新規作成","create_reception_list",4,"ID{$receptionList->id}の健診簿データを登録"]));
 
         }
+        //現在使用中の健診簿IDに設定
+        Configuration::setReceptionId($receptionList->id);
+
         return ['list'=>$receptionList];
 
     }    

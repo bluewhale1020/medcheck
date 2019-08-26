@@ -88,7 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-header">マニュアル</li>
 
             <li class="nav-item">
-                <a href="/medcheck/public/manual/basic" class="nav-link">
+                <a href="/medcheck/public/manual/basic" class="nav-link" name="basic">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       基本事項
@@ -96,7 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>
             <li class="nav-item">
-                <a href="/medcheck/public/manual/user" class="nav-link">
+                <a href="/medcheck/public/manual/user" class="nav-link" name="user">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       ユーザー管理
@@ -104,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/config" class="nav-link">
+                <a href="/medcheck/public/manual/config" class="nav-link" name="config">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       システム設定
@@ -112,7 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/manage_area" class="nav-link">
+                <a href="/medcheck/public/manual/manage_area" class="nav-link" name="manage_area">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       検査エリア管理
@@ -120,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/import" class="nav-link">
+                <a href="/medcheck/public/manual/import" class="nav-link" name="import">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       健診簿インポート
@@ -128,7 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/reserve" class="nav-link">
+                <a href="/medcheck/public/manual/reserve" class="nav-link" name="reserve">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       予約リスト
@@ -136,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/area" class="nav-link">
+                <a href="/medcheck/public/manual/area" class="nav-link" name="area">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       検査エリア
@@ -144,7 +144,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/progress" class="nav-link">
+                <a href="/medcheck/public/manual/progress" class="nav-link" name="progress">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       検査進捗管理
@@ -152,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/result" class="nav-link">
+                <a href="/medcheck/public/manual/result" class="nav-link" name="result">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       健診結果出力 
@@ -160,7 +160,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>                    
             </li>         
             <li class="nav-item">
-                <a href="/medcheck/public/manual/top" class="nav-link">
+                <a href="/medcheck/public/manual/top" class="nav-link" name="top">
                   <i class="nav-icon fa fa-circle-o"></i>
                   <p>
                       トップ
@@ -206,5 +206,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 <script src="{{ asset('/js/app.js') }}"></script>
+<script>
+        $(function(){
+          menu_item = '@yield('menu')';
+          $('.nav-link[name='+menu_item+']').addClass('active');
+        });  
+
+</script>
 </body>
 </html>

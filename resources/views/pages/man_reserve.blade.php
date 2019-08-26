@@ -1,5 +1,5 @@
 @extends('layouts.doc')
-
+@section('menu','reserve')
 @section('content')
 <div class="container">
     <div class="row">

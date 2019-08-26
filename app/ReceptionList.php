@@ -31,12 +31,12 @@ class ReceptionList extends Model
 
     public static function calcExpirationDate($import_date){
         $dt = Carbon::parse($import_date);
-        return $dt->addMonth();
+        return $dt->addMonthsNoOverflow();
     }
 
     public static function getReceptionLists(){
-
-        $result = self::get()->pluck("name","id")->toArray();
+        $dt = Carbon::now();
+        $result = self::where('expiration_date','>',$dt->format('Y-m-d'))->get()->pluck("name","id")->toArray();
 
         if(empty($result)){
             return false;

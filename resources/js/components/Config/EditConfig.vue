@@ -121,7 +121,7 @@
                       <has-error :form="form" field="default_barcode_no"></has-error>
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <!-- <div class="form-group row">
                     <label class="col-4 col-form-label">出力ファイル名</label>
                     <div class="col-8">
                       <input
@@ -135,7 +135,7 @@
                       />
                       <has-error :form="form" field="reception_list_filename"></has-error>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <!-- row -->

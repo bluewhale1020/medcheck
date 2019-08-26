@@ -9,9 +9,20 @@ class Configuration extends Model
     public static function getReceptionId(){
         return self::where('name','reception_list_id')->pluck('value')->first();
     }
+    public static function setReceptionId($id){
+        
+        $config = self::where('name','reception_list_id')->first();
+        $config->value = $id;
+        $config->save();
+
+    }    
     public static function getFirstSerialNo(){
         return self::where('name','first_serial_number')->pluck('value')->first();
     }
+    public static function getReceptionListFilename(){
+        return self::where('name','reception_list_filename')->pluck('value')->first();
+    }
+
 
     //バーコードカラム名と白紙バーコードNOを返す
     public static function getBarcodeInfo(){

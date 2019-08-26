@@ -161,7 +161,7 @@
 <script>
 import moment from 'moment';
 import XLSX from 'xlsx';
-import { isUndefined, isNull } from 'util';
+import { isUndefined, isNull, isDate } from 'util';
 import { stringify } from 'querystring';
 
 
@@ -390,18 +390,23 @@ import { stringify } from 'querystring';
                     var reader = new FileReader(),
                         name = f.name;
                     reader.onload = (e)=> {
-                    var results, 
-                        data = e.target.result, 
-                        fixedData = this.fixdata(data), 
-                        workbook=XLSX.read(btoa(fixedData), {type: 'base64', cellText:false, dateNF:'yyyy-mm-dd'}), 
-                        firstSheetName = workbook.SheetNames[0], 
-                        worksheet = workbook.Sheets[firstSheetName];
-                    this.headers=this.get_header_row(worksheet);
-                    results=XLSX.utils.sheet_to_json(worksheet, {header:0});
-                    this.init_import_result(results.length);
+                        let result;
+                        let data = e.target.result; 
+                        // データが多いとString.fromCharCode()でMaximum call stack size exceededエラーとなるので、
+                        // 別途関数で処理をする。
+                        //var arr = String.fromCharCode.apply(null, new Uint8Array(data));
+                        let arr = this.handleCodePoints(new Uint8Array(data));                        
+                        let workbook=XLSX.read(btoa(arr), {type: 'base64', cellDates:true});
 
-                    this.records=results;
-                    this.showTable = true;
+                        let firstSheetName = workbook.SheetNames[0]; 
+                        let worksheet = workbook.Sheets[firstSheetName];
+                        this.headers=this.get_header_row(worksheet);
+                        result=this.toJson(worksheet);
+
+                        this.init_import_result(result.length);
+
+                        this.records=result;
+                        this.showTable = true;
                     };
                     reader.readAsArrayBuffer(f);
                 //   }
@@ -426,12 +431,38 @@ import { stringify } from 'querystring';
                     }
                     return headers;
                 },
-                fixdata:function (data) {
-                    var o = "", l = 0, w = 10240;
-                    for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
-                    o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
-                    return o;
-                },
+                // see: https://github.com/mathiasbynens/String.fromCodePoint/issues/1
+                handleCodePoints:function(array) {
+                    var CHUNK_SIZE = 0x8000; // arbitrary number here, not too small, not too big
+                    var index = 0;
+                    var length = array.length;
+                    var result = '';
+                    var slice;
+                    while (index < length) {
+                        slice = array.slice(index, Math.min(index + CHUNK_SIZE, length)); // `Math.min` is not really necessary here I think
+                        result += String.fromCharCode.apply(null, slice);
+                        index += CHUNK_SIZE;
+                    }
+                    return result;
+                },              
+                toJson: function (worksheet) {
+                    var result = [];
+
+                    var roa = XLSX.utils.sheet_to_row_object_array(worksheet);
+                    if(roa.length > 0){
+                        roa.slice(1);
+                        roa.forEach(row => {
+                            Object.keys(row).forEach(key => {
+                                if( isDate(row[key])){
+                                    row[key] = moment(row[key]).format('YYYY-MM-DD');
+                                }
+                            });
+                        });
+                        result = roa;
+                    }
+
+                    return result;
+                },                
                 // workbook_to_json:function (workbook) {
                 //     var result = {};
                 //     workbook.SheetNames.forEach(function(sheetName) {
