@@ -680,7 +680,7 @@ import { isUndefined, isNull, isNumber } from 'util';
           })
           .then(({ data }) => {
             this.serial_numbers = data.serial_numbers;
-            this.setCurrentNumber(); 
+            this.setCurrentNumber(false); 
 
             if(data.reserveInfos == false || Object.keys(data.reserveInfos.data).length == 0){
               // this.alert = Object.assign({},this.alert, {'no_match':true });
@@ -712,13 +712,17 @@ import { isUndefined, isNull, isNumber } from 'util';
             return false;
           }
         },        
-        setCurrentNumber:function(){
+        setCurrentNumber:function(update_current = true){
           if(this.serial_numbers.last_serial_number == 0){
-            this.current_number = this.serial_numbers.first_serial_number;
+            if(update_current){
+              this.current_number = this.serial_numbers.first_serial_number;
+            }            
             this.serial_numbers.last_serial_number = this.current_number;
             this.serial_numbers.max_serial_number = this.current_number;
           }else{
-            this.current_number = this.serial_numbers.max_serial_number + 1;
+            if(update_current){
+              this.current_number = this.serial_numbers.max_serial_number + 1;
+            }
           }
         },
         formatDate:function(dateObj){
@@ -950,8 +954,8 @@ import { isUndefined, isNull, isNumber } from 'util';
 
         },        
         connectChannel() {
-            ///重要！！！ medchecker_database_のprefixをチャネル名に付ける事！！
-            Echo.channel("medchecker_database_checkup-data-updated").listen("CheckupDataUpdated", e => {
+            ///重要！！！ medcheck_database_のprefixをチャネル名に付ける事！！
+            Echo.channel("medcheck_database_checkup-data-updated").listen("CheckupDataUpdated", e => {
               if(e.category == 'reserve'){
                   this.search(this.reserve_infos.current_page);
               }                

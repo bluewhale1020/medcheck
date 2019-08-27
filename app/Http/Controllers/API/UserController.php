@@ -12,6 +12,18 @@ use App\Http\Requests\API\UpdateUserRequest;
 
 class UserController extends Controller
 {
+
+    /**
+     * Display online user list
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function online_user()
+    {
+        return User::getOnlineUsers();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +31,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
-        if(!empty($request->side_menu_bar)){
-            return User::getOnlineUsers();
-        }
 
         $key = $request->search_key;
         $role_id = $request->role_id;

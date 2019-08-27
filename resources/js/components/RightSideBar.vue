@@ -35,11 +35,11 @@
         methods: {
             loadUsers:function(){
             // axios.get('api/user?page=' + page
-            axios.get('api/user',{
-                params: {
-                // ここにクエリパラメータを指定する
-                    'side_menu_bar':true
-                }
+            axios.get('api/online_user',{
+                // params: {
+                // // ここにクエリパラメータを指定する
+                //     'side_menu_bar':true
+                // }
             })
             .then(({ data }) => { 
                     this.users = data;
@@ -49,8 +49,8 @@
                 ; 
             },           
             connectChannel() {
-                ///重要！！！ medchecker_database_のprefixをチャネル名に付ける事！！
-                Echo.channel("medchecker_database_login").listen("LoginEvent", e => {
+                ///重要！！！ medcheck_database_のprefixをチャネル名に付ける事！！
+                Echo.channel("medcheck_database_login").listen("LoginEvent", e => {
                     this.loadUsers();              
                 });
             }            

@@ -87,10 +87,11 @@ class SelectItemInfo extends Model
     // 予約リストの検査項目の英語・日本語リストを返す
     public static function getSelectItemList(){
 
-        $advanced_list = self::where('grouping','!=','')->orderBy('select_item_order','asc')
+        $advanced_list = self::whereNotNull('grouping')->where('grouping','!=','')->orderBy('select_item_order','asc')
         ->select('name','name_jp','options','grouping')->get()->groupBy('grouping');
 
-        $basic_list = self::where('grouping','')->orderBy('select_item_order','asc')->get()->pluck('name_jp','name')->toArray();
+        $basic_list = self::where('grouping', '=', '')->orWhereNull('grouping')
+        ->orderBy('select_item_order','asc')->get()->pluck('name_jp','name')->toArray();
         return ['basic'=>$basic_list,'advance'=>$advanced_list];
 
     }

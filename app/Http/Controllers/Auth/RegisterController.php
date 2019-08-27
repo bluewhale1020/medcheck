@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Role;
+use App\Events\LoginEvent;
 
 class RegisterController extends Controller
 {
@@ -77,11 +78,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'role_id' => $data['role_id'],
             'email' => 'yasuno@aobax.co.jp',//$data['email'],
             'password' => Hash::make($data['password']),
+            'online'=>1
         ]);
+
+        if($user){
+            broadcast(new LoginEvent())->toOthers();
+        }
+
+        return $user;
+
     }
 }

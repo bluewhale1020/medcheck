@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('online_user', 'API\UserController@online_user');
+
 Route::group(['middleware' => ['auth:api','config_table']], function(){
     Route::Resources(['user' => 'API\UserController']);
     Route::Resources(['role' => 'API\RoleController']);
@@ -20,9 +22,8 @@ Route::group(['middleware' => ['auth:api','config_table']], function(){
      
     Route::get('stat', 'API\DashBoardController@statIndex');
     Route::get('event_list', 'API\EventListController@index');
-    // Route::get('message_board', 'API\MessageBoardController@index');
-    // Route::post('message_board', 'API\MessageBoardController@store');
-    Route::delete('reserve/{id}', 'API\ReserveInfoController@destroy');
+
+    // Route::delete('reserve/{id}', 'API\ReserveInfoController@destroy');
     
     
     Route::Resources(['reserve' => 'API\ReserveInfoController']);

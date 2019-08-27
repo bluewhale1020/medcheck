@@ -156,8 +156,8 @@
 
             },        
             connectChannel() {
-                ///重要！！！ medchecker_database_のprefixをチャネル名に付ける事！！
-                Echo.channel("medchecker_database_message-updated").listen("MessageUpdated", e => {
+                ///重要！！！ medcheck_database_のprefixをチャネル名に付ける事！！
+                Echo.channel("medcheck_database_message-updated").listen("MessageUpdated", e => {
                     this.loadMessageBoard();
                 });
             }            

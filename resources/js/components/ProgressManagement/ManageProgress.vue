@@ -221,8 +221,8 @@ export default {
       });
     },
     connectChannel() {
-        ///重要！！！ medchecker_database_のprefixをチャネル名に付ける事！！
-        Echo.channel("medchecker_database_checkup-data-updated").listen("CheckupDataUpdated", e => {
+        ///重要！！！ medcheck_database_のprefixをチャネル名に付ける事！！
+        Echo.channel("medcheck_database_checkup-data-updated").listen("CheckupDataUpdated", e => {
           if(e.category == 'reserve' || e.category == 'result'){
               this.search();
           }                
