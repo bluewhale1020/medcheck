@@ -46,7 +46,7 @@ class MessageBoardController extends Controller
 
         broadcast(new MessageUpdated())->toOthers();
 
-        return ['message'=>'コメントを登録しました。'];     
+        return ['message'=>'コメントを送信しました。'];     
     }
 
     public function destroy($id)

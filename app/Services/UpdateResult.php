@@ -9,6 +9,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Exceptions\HttpResponseException;  
 
 use App\ExamResult;
@@ -135,11 +136,11 @@ class UpdateResult
             'l_eyesight'=>'nullable|numeric|max:20',
             'corrected_r_eyesight'=>'nullable|numeric|max:20',
             'corrected_l_eyesight'=>'nullable|numeric|max:20',
-            'r_hearing_1000hz'=>'nullable|in:所見なし,聴取不可,所見あり',
-            'l_hearing_1000hz'=>'nullable|in:所見なし,聴取不可,所見あり',
-            'r_hearing_4000hz'=>'nullable|in:所見なし,聴取不可,所見あり',
-            'l_hearing_4000hz'=>'nullable|in:所見なし,聴取不可,所見あり',
-            'hearing_on_conv'=>'nullable|in:所見なし,聴取不可,所見あり',
+            'r_hearing_1000hz'=>['nullable', "regex:(所見なし|聴取不可|所見あり)"],
+            'l_hearing_1000hz'=>['nullable', "regex:(所見なし|聴取不可|所見あり)"],
+            'r_hearing_4000hz'=>['nullable', "regex:(所見なし|聴取不可|所見あり)"],
+            'l_hearing_4000hz'=>['nullable', "regex:(所見なし|聴取不可|所見あり)"],
+            'hearing_on_conv'=>['nullable', "regex:(所見なし|聴取不可|所見あり)"],
             'h_blood_pressure'=>'nullable|integer|max:300', 
             'l_blood_pressure'=>'nullable|integer|max:150',
             'chest_xray_no'=>'nullable|integer',     
