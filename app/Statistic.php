@@ -55,9 +55,10 @@ class Statistic extends Model
         }  
         
         $new = Carbon::parse($event_created_at);
+        $today = Carbon::today();
         $old = Carbon::parse($last_updated);
 
-        if($new->gt($old)){
+        if($new->gt($old) or $today->gt($old)){
             return false;
         }else{
             $data = $this::get()->pluck('value','name')->toArray();

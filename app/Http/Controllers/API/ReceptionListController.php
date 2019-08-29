@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ReceptionList;
 use App\Configuration;
+use App\IoItemConversion;
 
 use App\Events\saveModel;
 
@@ -54,6 +55,10 @@ class ReceptionListController extends Controller
         return ['list'=>$receptionList];
 
     }    
+
+    public function listColumns(){
+        return IoItemConversion::getRequiredColumns();
+    }
 
     public function import(ImportService $import,Request $request){
 

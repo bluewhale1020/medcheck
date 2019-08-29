@@ -35,7 +35,15 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" @click.prevent="importList()" class="btn btn-primary">ファイルをインポートする</button>
+                    <div class="btn-group float-left mr-5">
+                        <button type="submit" @click.prevent="importList()" class="btn btn-primary">ファイルをインポートする</button>
+
+                    </div>
+                    <div class="mr-3" v-show="loading">
+                        <div class="progress" style="height: 30px;"><div class="progress-bar bg-success" :style="{width: progress_rate + '%'}">{{progress_rate}}%</div></div>
+
+                    </div>
+               
                 </div>
               </form>
             </div>
@@ -175,6 +183,7 @@ import { stringify } from 'querystring';
                 headers:[],
                 records:[],
                 import_result:[],
+                list_columns:[],
                 error_dl:'',
                 list:{
                     id:null,
@@ -187,8 +196,19 @@ import { stringify } from 'querystring';
                     max_serial_number:'',
                 },
                 loading:false, 
+                progress:0,
             }
         },
+        computed: {
+            progress_rate(){
+                if(this.records.length>0){
+                    return parseInt(this.progress * 100 / this.records.length);
+
+                }else{
+                    return 0;
+                }
+            },
+        },        
         methods: {
             clickCell(idx,col_no, event){
                 this.isActive = [idx,col_no];
@@ -288,7 +308,7 @@ import { stringify } from 'querystring';
                     return false;
                 }
                 this.error_dl = '';
-
+                this.progress = 0;
                 try {
                     this.loading = true;            
 
@@ -311,10 +331,14 @@ import { stringify } from 'querystring';
                         }
 
                         console.log(res.data);
-
+                        this.progress += 1;
                                               
                     }
-                  
+                    Swal.fire(
+                    'インポート完了',
+                    '健診簿データをインポートしました',
+                    'success'
+                    );                  
                 } catch (error) {
                     console.log(error);                    
                     // const {
@@ -400,7 +424,16 @@ import { stringify } from 'querystring';
 
                         let firstSheetName = workbook.SheetNames[0]; 
                         let worksheet = workbook.Sheets[firstSheetName];
-                        this.headers=this.get_header_row(worksheet);
+                        let headers=this.get_header_row(worksheet);
+                        if(this.checkHeaders(headers) == false){
+                            Swal.fire(
+                            'データ書式エラー',
+                            '健診簿データが既定の書式でありません！',
+                            'error'
+                            );                             
+                            return false;
+                        }
+                        this.headers = headers;
                         result=this.toJson(worksheet);
 
                         this.init_import_result(result.length);
@@ -410,6 +443,19 @@ import { stringify } from 'querystring';
                     };
                     reader.readAsArrayBuffer(f);
                 //   }
+                },
+                checkHeaders:function(headers){
+                    let result = this.list_columns.every(column=>{
+                        return headers.includes(column);
+                    });
+                    return result;
+                },
+                loadRequiredColumns:function(){
+                    axios.get("api/list_columns")
+                    .then(({ data }) => { 
+                        this.list_columns = data;
+                        
+                    });                      
                 },
                 init_import_result:function(count){
                     this.import_result = [];
@@ -474,7 +520,8 @@ import { stringify } from 'querystring';
                 //     return result;
                 // }                
         },
-        mounted() {
+        async mounted() {
+            await this.loadRequiredColumns();
             console.log('Component mounted.')
         }
     }

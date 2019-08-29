@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:api','config_table']], function(){
     
     Route::post('import', 'API\ReceptionListController@import');
     Route::post('reception_list', 'API\ReceptionListController@create');
+    Route::get('list_columns', 'API\ReceptionListController@listColumns');
     
     Route::get('progress', 'API\ProgressManagementController@index');
     Route::get('progress/columns', 'API\ProgressManagementController@getColumns');

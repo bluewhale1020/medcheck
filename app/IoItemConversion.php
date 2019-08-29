@@ -15,6 +15,12 @@ class IoItemConversion extends Model
 
         return $columnNames;
     }
+    
+    //健診簿の必須カラム名リストを返す
+    public static function getRequiredColumns(){
+        $columnNames = self::where('required',true)->pluck('name');
 
+        return $columnNames;
+    }
  
 }

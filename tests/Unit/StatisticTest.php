@@ -55,7 +55,7 @@ class StatisticTest extends TestCase
         $this->db_data = [
            [
             "name" => "last_updated_time",
-            "value" => '2019-07-26 00:00:00',
+            "value" => Carbon::today()->toDateTimeString(),
             "name_jp" => "作成日時",
           ],
             //   [
@@ -179,7 +179,7 @@ class StatisticTest extends TestCase
     }
 
     public function testGetStatisticsData(){
-        $event_created_at = '2019-07-26 00:00:00';
+        $event_created_at = Carbon::now()->toDateTimeString();
 
         $result =  $this->stat->getStatisticsData($event_created_at);
 
@@ -187,18 +187,21 @@ class StatisticTest extends TestCase
 
         $data= $this->stat_data;
         $data['count_at_intervals'] = [1,2,3];        
+        $data['start_time'] = null;        
         $result =  $this->stat->saveStatisticsData($event_created_at,$data);
 
         $result =  $this->stat->getStatisticsData($event_created_at);
 
+        $this->assertTrue(\is_array($result));        
+
         // print_r($result);
+        foreach ($this->stat_data as $idx => $value) {
+            # code...
+            $this->assertContains($value, $result);         
+        }
 
-        $expected = $data;
-        $expected['last_updated_time'] = $event_created_at; 
-        $expected['start_time'] = null; 
-        $this->assertEquals($expected,$result); 
 
-        $event_created_at = '2019-07-26 08:00:00';
+        $event_created_at = Carbon::today()->addDays(1);
 
         $result =  $this->stat->getStatisticsData($event_created_at);
 
@@ -210,7 +213,7 @@ class StatisticTest extends TestCase
         // データのクリア error happens (1305 SAVEPOINT trans2 does not exist) due to nested transactions
         // DB::table('statistics')->truncate();
 
-        $event_created_at = '2019-07-26 00:00:00';
+        $event_created_at = Carbon::today()->toDateTimeString();
         $data= $this->stat_data;
         $data['count_at_intervals'] = [1,2,3];
 
