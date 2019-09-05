@@ -547,10 +547,22 @@ import { cloneDeep } from 'lodash';
 
               Object.keys(this.result_infos).forEach(select_itemname => {
                 if(required_items.includes(select_itemname)){
-                  Object.keys(this.result_infos[select_itemname]).forEach(result_itemname => {
-                    Vue.set(this.form_items,result_itemname,this.result_infos[select_itemname][result_itemname].name_jp);
-                  });     
-                  required_items = required_items.filter(item => item !== select_itemname);             
+
+                  //尿検の場合はurinary_test_typeの項目のみ選択
+                  if(select_itemname == 'urinary_test'){
+                    var urinary_items = reserve.select_item['urinary_test_type'];
+                    for(const urinary_item of urinary_items){
+                      Vue.set(this.form_items,urinary_item,this.result_infos[select_itemname][urinary_item].name_jp);
+                    }
+
+                  }else{
+                    Object.keys(this.result_infos[select_itemname]).forEach(result_itemname => {
+                      Vue.set(this.form_items,result_itemname,this.result_infos[select_itemname][result_itemname].name_jp);
+                    });     
+
+                    //結果入力欄のみ選択
+                    required_items = required_items.filter(item => item !== select_itemname);             
+                  }
                 }             
               });
 
@@ -766,7 +778,7 @@ import { cloneDeep } from 'lodash';
           this.currentUrl = window.location.protocol + "//" + window.location.host + "/";          
             this.setImagePath(this.exam_area_id); 
             console.log('Component mounted.');
-            this.connectChannel();                      
+            // this.connectChannel();                      
         }
     }
 </script>

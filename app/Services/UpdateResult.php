@@ -67,7 +67,10 @@ class UpdateResult
         if(!empty($resultData)){
             $selectItems = $this->getSelectItemsFromResultData($resultData);
             // print_r($resultData);
-            $selectData = \array_merge($selectData, $selectItems);
+            //結果関連の検査項目データを登録項目に加える
+            $selectData = $this->mergeSelectData($selectItems, $selectData);
+
+            // $selectData = \array_merge($selectItems, $selectData);
             $resultData['reserve_info_id'] = $reserve_info_id;            
             $resultRequest = new Request($resultData);
 
@@ -78,6 +81,28 @@ class UpdateResult
 
         }
         return [$resultRequest,$selectRequest];
+    }
+
+    //結果関連の検査項目データを登録項目に加える
+    // 登録項目と重複する場合の処理を実施
+    public function mergeSelectData($selectItems, $selectData){
+
+        $selectNames = array_keys($selectData);
+
+        foreach ($selectItems as $itemName => $value) {
+            //重複項目で、データありで未受診のときに、受診済にする
+            // 受診有無を優先する場合：		
+            // 結果	　　　　受診有無	確定値
+            // データあり	済	　　　　済
+            // データあり	未受診	　　未受診  ＜－これを済にしたい
+            // データなし	済	　　　　済
+            // データなし	未受診	　　未受診
+            // 不完全	　　未受診	　　未受診
+            if(in_array($itemName,$selectNames) and $value == 2 and $selectData[$itemName] == 1){
+                $selectData[$itemName] = 2;
+            }
+        }
+        return array_merge($selectItems, $selectData);
     }
 
     public function getSelectItemsFromResultData($resultData){

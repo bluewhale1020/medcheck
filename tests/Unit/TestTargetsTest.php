@@ -50,11 +50,11 @@ class TestTargetsTest extends TestCase
     }
 
     /**
-     * testCheckStatus unit test
+     * testModifyReserve unit test
      * @param $area_items,$reserveInfos
      * @return void
      */
-    public function testCheckStatus()
+    public function testModifyReserve()
     {
         factory(ReserveInfo::class,1)->create()
         ->each(function(ReserveInfo $reserve) {
@@ -68,7 +68,7 @@ class TestTargetsTest extends TestCase
         }
 
         $area_items = ['height'];
-        $result =  $this->test_targets->checkStatus($area_items,$reserveInfos);
+        $result =  $this->test_targets->modifyReserve($area_items,$reserveInfos);
 
 
         $progress = "未実施";
@@ -81,7 +81,7 @@ class TestTargetsTest extends TestCase
         }        
 
         $area_items = ['weight','bodyfat_ratio'];
-        $result =  $this->test_targets->checkStatus($area_items,$reserveInfos);
+        $result =  $this->test_targets->modifyReserve($area_items,$reserveInfos);
 
 
         $progress = "一部実施";
@@ -95,7 +95,7 @@ class TestTargetsTest extends TestCase
      
 
         $area_items = ['bodyfat_ratio','vision_test'];
-        $result =  $this->test_targets->checkStatus($area_items,$reserveInfos);
+        $result =  $this->test_targets->modifyReserve($area_items,$reserveInfos);
 
 
         $progress = "実施済み";
@@ -104,10 +104,26 @@ class TestTargetsTest extends TestCase
 
 
         $area_items = [];
-        $result =  $this->test_targets->checkStatus($area_items,$reserveInfos);
+        $result =  $this->test_targets->modifyReserve($area_items,$reserveInfos);
         print_r($result);
         $this->assertFalse($result);        
     }
+
+    /**
+     * testConvUrinaryTestType unit test
+     * @param $type
+     * @return $item_names
+     */
+    public function testConvUrinaryTestType()
+    {
+        $type = "蛋白+糖+潜血";
+        $result = $this->test_targets->convUrinaryTestType($type);
+        
+        $expected = ['urinary_protein','urinary_sugar','urinary_blood'];
+        $this->assertEquals($expected,$result);       
+    }
+
+
 
     /**
      * testGetTestTargetInfos unit test

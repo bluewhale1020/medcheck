@@ -35,7 +35,7 @@ class ExamAreaController extends Controller
         ];
         if($load_mode == 'init'){
 
-            // check_only検査項目の英語・日本語リストを取得
+            // check_only・use_bothの検査項目の英語・日本語リストを取得
             $item_list = SelectItemInfo::getAreaItemList($area_items);
             
             //check_only以外の結果項目データ

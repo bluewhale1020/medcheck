@@ -73,12 +73,17 @@ class SelectItemInfo extends Model
     }
 
 
-    // 検査エリアの検査項目の英語・日本語リストを返す
+    // 検査エリアの検査項目の英語・日本語リストを返す（check_onlyかuse_bothの場合）
     public static function getAreaItemList($area_items){
         if(empty($area_items)){
             return false;
         }
-        $itemInfos = self::whereIn('name',$area_items)->where('check_only',1)->get()->pluck('name_jp','name');
+        $itemInfos = self::whereIn('name',$area_items)
+        ->where(function($query){
+            $query->orWhere('check_only',1)->orWhere('use_both', 1);
+        })
+        ->get()->pluck('name_jp','name');
+
         return $itemInfos->toArray();
 
     }
@@ -101,6 +106,14 @@ class SelectItemInfo extends Model
     public static function getMetabolitesGroup(){
 
         return self::where('check_only',false)->where('grouping','metabolites')->orderBy('select_item_order','asc')->get()->pluck('name_jp','name')->toArray();
+
+    }    
+
+    //同一グループのタイプを返す
+    public static function getGroupOptions($group){
+        return self::where(function ($query){
+            $query->whereNotNull('options')->Where('options','<>', '');
+        })->where('grouping',$group)->pluck('name_jp','name')->toArray();
 
     }    
 }

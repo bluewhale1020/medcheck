@@ -24,6 +24,16 @@ class ResultInfo extends Model
 
     }
 
+    // カテゴリ名から、対応する項目名・日本語名を返す
+    public static function getColumnsFromCategory($category){
+        if(empty($category)){
+            return [];
+        }
+
+        return self::where('select_item_category',$category)->pluck('name_jp','name')->toArray();
+
+    }
+
 
     //結果データ順に結果名リストを返す
     public static function getTableColumns(){
@@ -69,11 +79,26 @@ class ResultInfo extends Model
 
         $selectItems = [];
         foreach($resultData as $key => $value){
-            if(!empty($value) and $value !== 0){
-                $selectItems[$resultInfo[$key]] = 2;
-            }elseif(empty($selectItems[$resultInfo[$key]] )){
-                $selectItems[$resultInfo[$key]] = 1;
+
+            //視力は一部実施でＯＫ
+            if($resultInfo[$key] == 'vision_test'){
+
+                if(!empty($value) or $value === 0){
+                    $selectItems[$resultInfo[$key]] = 2;
+                }elseif(empty($selectItems[$resultInfo[$key]] )){
+                    $selectItems[$resultInfo[$key]] = 1;
+                }
+                
+            }else{
+                //それ以外は全て実施が検査完了の条件
+                if(empty($value) and $value !== 0){
+                    $selectItems[$resultInfo[$key]] = 1;
+                }elseif(empty($selectItems[$resultInfo[$key]])){
+                    $selectItems[$resultInfo[$key]] = 2;
+                }
+
             }
+
         }
 
         // $resultInfo = self::whereIn('name',$resultNames)

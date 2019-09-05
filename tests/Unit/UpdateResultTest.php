@@ -222,7 +222,7 @@ class UpdateResultTest extends TestCase
 
        $expected =$this->createRequest(
            ['fecaloccult_blood'=> 2,'urinary_sediment'=>1]);
-            print_r($result);
+            // print_r($result);
            $this->assertFalse($result['exam_result']);
            $this->assertInstanceOf(SelectItem::class, $result['select_item']);
    
@@ -264,12 +264,67 @@ class UpdateResultTest extends TestCase
        #4
        $result =  $this->update->saveResultForm($this->request4,$this->test_reserve_id);
 
-       $expected = ['exception'=>true,'errors'=>["保存するデータがありません！"]];
+       $expected = ['exception'=>true,'message'=>["保存するデータがありません！"]];
 
        $this->assertEquals($expected,$result);  
 
 
     }    
+
+
+    public function testMergeSelectData(){
+
+        $selectItems = [
+            "urinary_test"=>2,
+            "aweafa"=>1,           
+        ];
+        $selectData = [
+            "urinary_test"=>1,
+            "ewfew"=>1,           
+        ];
+
+        $result = $this->update->mergeSelectData($selectItems, $selectData);
+        $expected = [
+            "urinary_test"=>2,
+            "aweafa"=>1,
+            "ewfew"=>1,            
+        ];
+        $this->assertEquals($expected,$result);
+
+        $selectItems = [
+            "urinary_test"=>1,
+            "aweafa"=>1,           
+        ];
+        $selectData = [
+            "urinary_test"=>2,
+            "ewfew"=>1,           
+        ];
+
+        $result = $this->update->mergeSelectData($selectItems, $selectData);
+        $expected = [
+            "urinary_test"=>2,
+            "aweafa"=>1,
+            "ewfew"=>1,            
+        ];
+        $this->assertEquals($expected,$result);
+
+        $selectItems = [
+            "urinary_test"=>1,
+            "aweafa"=>1,           
+        ];
+        $selectData = [
+            "urinary_test"=>1,
+            "ewfew"=>1,           
+        ];
+
+        $result = $this->update->mergeSelectData($selectItems, $selectData);
+        $expected = [
+            "urinary_test"=>1,
+            "aweafa"=>1,
+            "ewfew"=>1,            
+        ];
+        $this->assertEquals($expected,$result);
+    }
 
     public function testGetSelectItemsFromResultData(){
 
@@ -283,8 +338,8 @@ class UpdateResultTest extends TestCase
 
         $result = $this->update->getSelectItemsFromResultData($resultData);
         $expected = [
-            'hearing_test'=>2,
-            'hearing_test_conv' =>2
+            'hearing_test'=>1,
+            'hearing_test_conv' =>1
         ];
         $this->assertEquals($expected,$result);
     }

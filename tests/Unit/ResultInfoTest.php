@@ -89,8 +89,42 @@ class ResultInfoTest extends TestCase
         ];
         $result =  ResultInfo::getSelectItemsFromResultNames($resultData);
 
-        $expected = ['hearing_test'=>2,'hearing_test_conv'=>2];
+        $expected = ['hearing_test'=>1,'hearing_test_conv'=>2];
         $this->assertEquals($expected,$result); 
+
+        $resultData = [
+            "r_eyesight"=>0.5,
+            "l_eyesight"=>0.2,
+            "corrected_r_eyesight"=>'',
+            "corrected_l_eyesight"=>'',           
+        ];
+        $result =  ResultInfo::getSelectItemsFromResultNames($resultData);
+
+        $expected = ['vision_test'=>2];
+        $this->assertEquals($expected,$result); 
+
+        $resultData = [
+            "r_eyesight"=>0.5,
+            "l_eyesight"=>0.2,
+            "corrected_r_eyesight"=>0.3,
+            "corrected_l_eyesight"=>0.8,           
+        ];
+        $result =  ResultInfo::getSelectItemsFromResultNames($resultData);
+
+        $expected = ['vision_test'=>2];
+        $this->assertEquals($expected,$result); 
+
+        $resultData = [
+            "r_eyesight"=>'',
+            "l_eyesight"=>'',
+            "corrected_r_eyesight"=>'',
+            "corrected_l_eyesight"=>'',     
+        ];
+        $result =  ResultInfo::getSelectItemsFromResultNames($resultData);
+
+        $expected = ['vision_test'=>1];
+        $this->assertEquals($expected,$result); 
+
 
 
         $resultData = [

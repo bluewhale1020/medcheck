@@ -13,10 +13,12 @@ use App\ExamArea;
 use App\ReserveInfo;
 use App\SelectItem;
 use App\SelectItemInfo;
+use App\ResultInfo;
 
 class TestTargets
 {
     protected $metabolites = [];
+    protected $item_options = [];
 
     public function getTestTargetInfos($exam_area_id,$reception_id,$request = null){
         //検査エリアの対象検査項目を取得
@@ -42,7 +44,7 @@ class TestTargets
         }
         
         // 状況と項目データを取得して、レコードに追加
-        $reserveInfos = $this->checkStatus($area_items,$reserveInfos);
+        $reserveInfos = $this->modifyReserve($area_items,$reserveInfos);
         //check_only以外の検査項目ID
         $select_info_ids = SelectItemInfo::getIds($area_items,true);
         
@@ -79,6 +81,11 @@ class TestTargets
         if(\in_array('urinary_metabolites',$selectColumns)){
             $this->metabolites = SelectItemInfo::getMetabolitesGroup();
             $selectColumns = \array_merge($selectColumns,array_keys($this->metabolites));
+        }
+        if(\in_array('urinary_test',$selectColumns)){
+            $test_type = SelectItemInfo::getGroupOptions('urinary');
+
+            $selectColumns = \array_merge($selectColumns,array_keys($test_type));
         }
         
         return $selectColumns;
@@ -153,8 +160,8 @@ class TestTargets
         return $query;
     }
 
-    // 実施・未実施のチェック（対象項目,検査項目）
-    public function checkStatus($area_items,$reserveInfos){
+    // 実施・未実施のチェック（対象項目,検査項目）、尿検のオプションタイプを検査名に変換
+    public function modifyReserve($area_items,$reserveInfos){
 
 
         if(empty($area_items)){
@@ -167,7 +174,7 @@ class TestTargets
         foreach ($reserveInfos as $key => $oneReserve) {
             $item_taken = 0;
             $required = 0;
-
+            $has_urinary_test = false;
             
             foreach ($area_items as $idx => $itemName) {
                 if(!empty($oneReserve->select_item[$itemName])){
@@ -176,6 +183,10 @@ class TestTargets
                         $item_taken += 1;
                     }
                     // print("${itemName}:".$oneReserve->select_item[$itemName]."\n");
+                }
+
+                if($itemName == 'urinary_test'){
+                    $has_urinary_test = true;
                 }
             }
             // print("item_taken:${item_taken} item_no:${item_no}\n");
@@ -191,9 +202,44 @@ class TestTargets
             }
 
             $reserveInfos[$key]['progress'] = $status;
+
+            //尿検タイプを検査名に変換
+            if($has_urinary_test and !empty($oneReserve->select_item['urinary_test_type'])){
+                $reserveInfos[$key]->select_item['urinary_test_type'] = $this->convUrinaryTestType($oneReserve->select_item['urinary_test_type']);
+            }
+
         }
 
         return $reserveInfos;
+    }
+
+    //尿検タイプを検査名に変換
+    public function convUrinaryTestType($type){
+
+        $options = \explode('+',$type);
+        $item_names = [];
+        foreach ($options as $key => $option) {
+            switch ($option) {
+                case '蛋白':
+                    $item_names[] = "urinary_protein";
+                    break;
+                case '糖':
+                    $item_names[] = "urinary_sugar";
+                    break;
+                case '潜血':
+                    $item_names[] = "urinary_blood";
+                    break;
+                case 'ウロビリ':
+                    $item_names[] = "urinary_urobilinogen";
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+        }
+        
+        return $item_names;
     }
     
 
