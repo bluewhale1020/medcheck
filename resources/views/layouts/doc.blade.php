@@ -206,6 +206,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 <script src="{{ asset('/js/app.js') }}"></script>
+<script src="{{ asset('/js/session_timeout.js') }}"></script>
 <script>
         $(function(){
           menu_item = '@yield('menu')';
