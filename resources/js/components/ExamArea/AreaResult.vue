@@ -229,6 +229,11 @@
           <has-error :form="form" :field="colName"></has-error> -->
         <!-- </div> -->
 
+              <div class="callout callout-warning"  v-show="colName == 'blood_test'"> 
+                <ul>
+                  <li class="text-danger">{{ blood_types[form['reserve_info_id']] }}</li>
+                </ul>
+              </div> 
               <div class="callout callout-warning"  v-show="colName == 'urinary_metabolites'"> 
                 <ul>
                   <li v-for="(meta_item,idx) in metabolite_list[form['reserve_info_id']]" :key="idx">{{ meta_item }}</li>
@@ -312,6 +317,7 @@ import { cloneDeep } from 'lodash';
                 item_list:{},                
                 result_infos:{},
                 this_result_info:{},
+                blood_types:{},
                 metabolites:{},
                 metabolite_list:{},
                 area:{},
@@ -522,17 +528,23 @@ import { cloneDeep } from 'lodash';
                 return '';
               }
             },
-            setMetabolitesList:function(){
+            setBloodAndMetabolitesList:function(){
               this.metabolite_list = {};
+              this.blood_types = {};
               for(const reserve of this.reserve_infos.data){
               var list_item = [];
-                if(reserve.select_item.hasOwnProperty('urinary_metabolites')){
+                if(_.isEmpty(this.metabolites) == false && reserve.select_item.hasOwnProperty('urinary_metabolites')){
                   Object.keys(reserve.select_item).forEach(key => {
                     if(this.metabolites.hasOwnProperty(key) && reserve.select_item[key] > 0){
                       list_item.push(this.metabolites[key]);
                     }             
                   });               
                   this.metabolite_list[reserve.id] = list_item;
+
+                }
+                if(reserve.select_item.hasOwnProperty('blood_test_type')){
+                  this.blood_types[reserve.id] = reserve.select_item['blood_test_type'];
+
                 }
 
               }
@@ -647,7 +659,7 @@ import { cloneDeep } from 'lodash';
               if(this.load_mode == 'init'){
                 this.item_list = data.item_list;
                 this.result_infos = data.result_infos;
-                this.metabolites = data.metabolites;
+                
 
                 this.columns = {};//
                 this.result_list=[];
@@ -664,10 +676,18 @@ import { cloneDeep } from 'lodash';
                   this.columns = Object.assign(this.columns, data.item_list);
                   this.select_list = Object.keys(data.item_list);
                 }
+
+                if(_.isEmpty(data.metabolites) == false){
+                  this.metabolites = data.metabolites;
+                }else{
+
+                  this.metabolites = {};
+                }
+                this.setBloodAndMetabolitesList();
+                
  
                 this.createForm();
               }
-                this.setMetabolitesList();
               })
               .finally(() => {this.loading = false;this.initLoading = false;});             
           },
@@ -778,7 +798,7 @@ import { cloneDeep } from 'lodash';
           this.currentUrl = window.location.protocol + "//" + window.location.host + "/";          
             this.setImagePath(this.exam_area_id); 
             console.log('Component mounted.');
-            // this.connectChannel();                      
+            this.connectChannel();                      
         }
     }
 </script>

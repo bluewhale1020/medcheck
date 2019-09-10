@@ -88,6 +88,12 @@ class TestTargets
             $selectColumns = \array_merge($selectColumns,array_keys($test_type));
         }
         
+        if(\in_array('blood_test',$selectColumns)){
+            $test_type = SelectItemInfo::getGroupOptions('blood');
+
+            $selectColumns = \array_merge($selectColumns,array_keys($test_type));
+        }
+
         return $selectColumns;
     }
 
